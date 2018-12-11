@@ -13,12 +13,12 @@ import tacos.Ingredient;
 import tacos.Ingredient.Type;
 
 @Repository
-public class JDBCTacosRepository implements TacosRepository {
+public class JdbcIngredientRepository implements IngredientRepository {
 	
 	private JdbcTemplate jdbc;
 	
 	@Autowired
-	public JDBCTacosRepository(JdbcTemplate jdbc) {
+	public JdbcIngredientRepository(JdbcTemplate jdbc) {
 		this.jdbc = jdbc;
 	}
 
