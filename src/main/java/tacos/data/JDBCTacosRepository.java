@@ -1,5 +1,7 @@
 package tacos.data;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +10,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import tacos.Ingredient;
+import tacos.Ingredient.Type;
 
 @Repository
 public class JDBCTacosRepository implements TacosRepository {
@@ -21,20 +24,31 @@ public class JDBCTacosRepository implements TacosRepository {
 
 	@Override
 	public Ingredient findOne(String id) {
-		// TODO Auto-generated method stub
-		return null;
+		return jdbc.queryForObject("select id, name, type from Ingredient where id = ?", 
+				this::mapToIngredient, id);
 	}
 
 	@Override
 	public List<Ingredient> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return jdbc.query("select id, name, type from Ingredient", 
+				this::mapToIngredient);
 	}
 
 	@Override
 	public void save(Ingredient ingredient) {
-		// TODO Auto-generated method stub
+		jdbc.update("Insert into Ingredient (id, name, type Values (?, ?, ?)",
+				ingredient.getId(),
+				ingredient.getName(),
+				ingredient.getType());
 
+	}
+	
+	private Ingredient mapToIngredient(ResultSet rs, int rowNumber) throws SQLException {
+		Ingredient ingredient = new Ingredient();
+		ingredient.setId(rs.getString("id"));
+		ingredient.setName(rs.getString("name"));
+		ingredient.setType(Type.valueOf(rs.getString("type")));
+		return ingredient;
 	}
 
 }
