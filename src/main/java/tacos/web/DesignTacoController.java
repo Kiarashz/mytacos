@@ -17,7 +17,7 @@ import tacos.data.IngredientRepository;
 @RequestMapping("/design")
 public class DesignTacoController {
 	
-	IngredientRepository ingredientRepository;
+	private final IngredientRepository ingredientRepository;
 	
 	@Autowired
 	public DesignTacoController(IngredientRepository ingredientRepository) {
