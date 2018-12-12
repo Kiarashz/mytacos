@@ -6,9 +6,8 @@ import org.springframework.stereotype.Repository;
 
 import tacos.Ingredient;
 
-@Repository
 public interface IngredientRepository {
-	
+
 	Ingredient findOne(String id);
 	List<Ingredient> findAll();
 	void save(Ingredient ingredient);
