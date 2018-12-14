@@ -24,8 +24,6 @@ public class DesignTacoController {
 		this.ingredientRepository = ingredientRepository;
 	}
 
-
-
 	@GetMapping
 	public String design(Model model) {
 		List<Ingredient> ingredients = ingredientRepository.findAll();
