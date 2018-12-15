@@ -1,6 +1,8 @@
 package tacos.web;
 
-import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,11 +28,13 @@ public class DesignTacoController {
 
 	@GetMapping
 	public String design(Model model) {
-		List<Ingredient> ingredients = ingredientRepository.findAll();
-		
+		Iterable<Ingredient> iIngredients = ingredientRepository.findAll();
 		for (Type type: Ingredient.Type.values()) {
-			model.addAttribute(type.name(), 
-					ingredients.stream().filter(ing -> ing.getType().equals(type)));
+			Stream<Ingredient> sIngredients = StreamSupport.stream(iIngredients.spliterator(), true);
+			model.addAttribute(type.name().toLowerCase(), 
+					sIngredients.filter(ing -> ing.getType().equals(type))
+					.collect(Collectors.toList())
+					);
 		}
 		
 		model.addAttribute("taco", new Taco());
