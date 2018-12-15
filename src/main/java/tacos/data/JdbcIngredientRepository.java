@@ -2,7 +2,6 @@ package tacos.data;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -28,7 +27,7 @@ public class JdbcIngredientRepository implements IngredientRepository {
 	}
 
 	@Override
-	public List<Ingredient> findAll() {
+	public Iterable<Ingredient> findAll() {
 		return jdbc.query("select id, name, type from Ingredient", 
 				this::mapToIngredient);
 	}
@@ -47,7 +46,7 @@ public class JdbcIngredientRepository implements IngredientRepository {
 		ingredient.setId(rs.getString("id"));
 		ingredient.setName(rs.getString("name"));
 		ingredient.setType(Type.valueOf(rs.getString("type")));
-		return ingredient;
+		return ingredient;					
 	}
 
 }
