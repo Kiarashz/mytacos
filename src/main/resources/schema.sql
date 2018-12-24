@@ -4,6 +4,10 @@ create table if not exists Ingredient (
   type varchar(10) not null
 );
 
+create table if not exists Keys (
+  nextKey bigint NOT NULL
+);
+
 create table if not exists Taco (
   id identity,
   name varchar(50) not null,

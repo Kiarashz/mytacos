@@ -7,10 +7,6 @@ import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.PreparedStatementCreator;
-import org.springframework.jdbc.core.PreparedStatementCreatorFactory;
-import org.springframework.jdbc.support.GeneratedKeyHolder;
-import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import tacos.Ingredient;
@@ -20,17 +16,15 @@ import tacos.Taco;
 public class JdbcTacoRepository implements TacoRepository {
 
 	private JdbcTemplate jdbc;
-	private PreparedStatementCreatorFactory pscf;
-	
+	private KeyGenerator keyGenerator;
+
+	private String INSERT_TACO_SQL = "insert into Taco (id, name, createdAt) values (?, ?, ?)";
 	
 	@Autowired
-	public JdbcTacoRepository(JdbcTemplate jdbc) {
+	public JdbcTacoRepository(JdbcTemplate jdbc, KeyGenerator generator) {
 		super();
 		this.jdbc = jdbc;
-		pscf = new
-				PreparedStatementCreatorFactory(
-				"insert into Taco (name, createdAt) values (?, ?)",
-				Types.VARCHAR, Types.TIMESTAMP);
+		this.keyGenerator = generator;
 	}
 
 
@@ -38,16 +32,11 @@ public class JdbcTacoRepository implements TacoRepository {
 	public Taco save(Taco design) {
 		// Save design
 		design.setCreatedAt(new Date());
-		PreparedStatementCreator psc = pscf.newPreparedStatementCreator(
-				Arrays.asList(
-						design.getName(), 
-						new Timestamp(design.getCreatedAt().getTime())
-						));
-		KeyHolder keyHolder = new GeneratedKeyHolder();
-		jdbc.update(psc, keyHolder);
-		Number key = keyHolder.getKey(); 
-		long id = key.longValue();
-		design.setId(id);
+		design.setId(keyGenerator.nextKey());
+		jdbc.update(INSERT_TACO_SQL, 
+				design.getId(),
+				design.getName(),
+				new Timestamp(design.getCreatedAt().getTime()));
 
 		for (Ingredient ing: design.getIngredients()) {
 			jdbc.update("insert into Taco_Ingredients (taco, ingredient) values (?, ?)",
