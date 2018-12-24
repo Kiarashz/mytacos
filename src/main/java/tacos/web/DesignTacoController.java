@@ -41,20 +41,26 @@ public class DesignTacoController {
 
 	@GetMapping
 	public String design(Model model) {
+		updateGetModel(model);
+		return "design";
+	}
+	
+	private void updateGetModel(Model model) {
 		Iterable<Ingredient> iIngredients = ingredientRepository.findAll();
 		for (Type type : Ingredient.Type.values()) {
 			Stream<Ingredient> sIngredients = StreamSupport.stream(iIngredients.spliterator(), true);
 			model.addAttribute(type.name().toLowerCase(),
 					sIngredients.filter(ing -> ing.getType().equals(type)).collect(Collectors.toList()));
-		}
-
-		model.addAttribute("taco", new Taco());
-		return "design";
+		}		
 	}
 
 	@PostMapping
-	public String processDesign(@Valid Taco design, Errors erros) {
-		tacoRepository.save(design);
-		return "redirect:/orders/current";
+	public String processDesign(@Valid Taco taco, Errors errors, Model model) {
+	    if (errors.hasErrors()) {
+	    	updateGetModel(model);
+	        return "design";
+	      }
+		tacoRepository.save(taco);
+		return "orders";
 	}
 }
