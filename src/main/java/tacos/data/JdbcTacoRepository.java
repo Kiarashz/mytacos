@@ -1,8 +1,6 @@
 package tacos.data;
 
 import java.sql.Timestamp;
-import java.sql.Types;
-import java.util.Arrays;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
