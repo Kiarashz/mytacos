@@ -1,48 +1,38 @@
-create table if not exists Ingredient (
-  id varchar(4) not null,
-  name varchar(25) not null,
-  type varchar(10) not null
+CREATE TABLE IF NOT EXISTS Ingredients (
+	id MEDIUMINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	name varchar(50),
+	itype varchar(10)
 );
 
-create table if not exists Keys (
-  nextKey bigint NOT NULL
+CREATE TABLE IF NOT EXISTS Tacos (
+	id MEDIUMINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	name varchar(50),
+	createdAt Timestamp
 );
 
-create table if not exists Taco (
-  id identity,
-  name varchar(50) not null,
-  createdAt timestamp not null
+CREATE TABLE IF NOT EXISTS Ingredients_Tacos (
+	taco MEDIUMINT NOT NULL,
+	ingredient MEDIUMINT NOT NULL,
+	CONSTRAINT fk_taco FOREIGN KEY (taco) REFERENCES Tacos(id),
+	CONSTRAINT fk_ingredient FOREIGN KEY (ingredient) REFERENCES Ingredients(id)
 );
 
-create table if not exists Taco_Ingredients (
-  taco bigint not null,
-  ingredient varchar(4) not null
+CREATE TABLE IF NOT EXISTS Orders (
+  id MEDIUMINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    deliveryName varchar(50) NOT NULL,
+    deliveryStreet varchar(50) NOT NULL,
+    deliveryCity varchar(50) NOT NULL,
+    deliveryState varchar(2) NOT NULL,
+    deliveryZip varchar(10) NOT NULL,
+    ccNumber varchar(16) NOT NULL,
+    ccExpiration varchar(5) NOT NULL,
+    ccCVV varchar(3) NOT NULL,
+    placedAt timestamp NOT NULL
 );
 
-alter table Taco_Ingredients
-    add foreign key (taco) references Taco(id);
-alter table Taco_Ingredients
-    add foreign key (ingredient) references Ingredient(id);
-
-create table if not exists Taco_Order (
-  id identity,
-    deliveryName varchar(50) not null,
-    deliveryStreet varchar(50) not null,
-    deliveryCity varchar(50) not null,
-    deliveryState varchar(2) not null,
-    deliveryZip varchar(10) not null,
-    ccNumber varchar(16) not null,
-    ccExpiration varchar(5) not null,
-    ccCVV varchar(3) not null,
-    placedAt timestamp not null
+CREATE TABLE IF NOT EXISTS Orders_Tacos (
+	taco MEDIUMINT NOT NULL,
+	torder MEDIUMINT NOT NULL,
+	CONSTRAINT fk_taco2 FOREIGN KEY (taco) REFERENCES Tacos(id),
+	CONSTRAINT fk_order FOREIGN KEY (torder) REFERENCES Ingredients(id)
 );
-
-create table if not exists Taco_Order_Tacos (
-  tacoOrder bigint not null,
-  taco bigint not null
-);
-
-alter table Taco_Order_Tacos
-    add foreign key (tacoOrder) references Taco_Order(id);
-alter table Taco_Order_Tacos
-    add foreign key (taco) references Taco(id);

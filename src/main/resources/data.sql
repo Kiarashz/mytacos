@@ -1,26 +1,22 @@
-delete from Taco_Order_Tacos;
-delete from Taco_Ingredients;
-delete from Taco;
-delete from Taco_Order;
+DELETE FROM Ingredients;
 
-delete from Ingredient;
-insert into Ingredient (id, name, type)
-                values ('FLTO', 'Flour Tortilla', 'WRAP');
-insert into Ingredient (id, name, type)
-                values ('COTO', 'Corn Tortilla', 'WRAP');
-insert into Ingredient (id, name, type)
-                values ('GRBF', 'Ground Beef', 'PROTEIN');
-insert into Ingredient (id, name, type)
-                values ('CARN', 'Carnitas', 'PROTEIN');
-insert into Ingredient (id, name, type)
-                values ('TMTO', 'Diced Tomatoes', 'VEGGIES');
-insert into Ingredient (id, name, type)
-                values ('LETC', 'Lettuce', 'VEGGIES');
-insert into Ingredient (id, name, type)
-                values ('CHED', 'Cheddar', 'CHEESE');
-insert into Ingredient (id, name, type)
-                values ('JACK', 'Monterrey Jack', 'CHEESE');
-insert into Ingredient (id, name, type)
-                values ('SLSA', 'Salsa', 'SAUCE');
-insert into Ingredient (id, name, type)
-                values ('SRCR', 'Sour Cream', 'SAUCE');
+insert into Ingredients (name, itype)
+                values ('Flour Tortilla', 'WRAP');
+insert into Ingredients (name, itype)
+                values ('Corn Tortilla', 'WRAP');
+insert into Ingredients (name, itype)
+                values ('Ground Beef', 'PROTEIN');
+insert into Ingredients (name, itype)
+                values ('Carnitas', 'PROTEIN');
+insert into Ingredients (name, itype)
+                values ('Diced Tomatoes', 'VEGGIES');
+insert into Ingredients (name, itype)
+                values ('Lettuce', 'VEGGIES');
+insert into Ingredients (name, itype)
+                values ('Cheddar', 'CHEESE');
+insert into Ingredients (name, itype)
+                values ('Monterrey Jack', 'CHEESE');
+insert into Ingredients (name, itype)
+                values ('Salsa', 'SAUCE');
+insert into Ingredients (name, itype)
+                values ('Sour Cream', 'SAUCE');
