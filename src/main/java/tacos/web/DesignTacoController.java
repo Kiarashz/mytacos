@@ -15,12 +15,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import lombok.extern.slf4j.Slf4j;
 import tacos.Ingredient;
 import tacos.Ingredient.Type;
 import tacos.Taco;
 import tacos.data.IngredientRepository;
 import tacos.data.TacoRepository;
 
+@Slf4j
 @Controller
 @RequestMapping("/design")
 public class DesignTacoController {
@@ -41,6 +43,7 @@ public class DesignTacoController {
 
 	@GetMapping
 	public String design(Model model) {
+		log.info("Rendering Taco design form");
 		updateGetModel(model);
 		return "design";
 	}
@@ -56,11 +59,13 @@ public class DesignTacoController {
 
 	@PostMapping
 	public String processDesign(@Valid Taco taco, Errors errors, Model model) {
+		log.info("Processing designed taco");
 	    if (errors.hasErrors()) {
 	    	updateGetModel(model);
+	    	// TODO: errors are not added to model
 	        return "design";
 	      }
 		tacoRepository.save(taco);
-		return "orders";
+		return "redirect:/orders";
 	}
 }
