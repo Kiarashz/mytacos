@@ -1,10 +1,16 @@
 package tacos.data;
 
 import java.sql.Timestamp;
+import java.sql.Types;
 import java.util.Date;
+import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.core.PreparedStatementCreatorFactory;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import tacos.Ingredient;
@@ -14,15 +20,16 @@ import tacos.Taco;
 public class JdbcTacoRepository implements TacoRepository {
 
 	private JdbcTemplate jdbc;
-	private KeyGenerator keyGenerator;
-
-	private String INSERT_TACO_SQL = "insert into Taco (id, name, createdAt) values (?, ?, ?)";
+	private PreparedStatementCreatorFactory pscf;
+	private String INSERT_TACO_SQL = "insert into Tacos (name, createdAt) values (?, ?)";
 	
 	@Autowired
-	public JdbcTacoRepository(JdbcTemplate jdbc, KeyGenerator generator) {
+	public JdbcTacoRepository(JdbcTemplate jdbc) {
 		super();
 		this.jdbc = jdbc;
-		this.keyGenerator = generator;
+		pscf = new PreparedStatementCreatorFactory(INSERT_TACO_SQL,
+				Types.VARCHAR, Types.TIMESTAMP);
+		pscf.setReturnGeneratedKeys(true);
 	}
 
 
@@ -30,14 +37,16 @@ public class JdbcTacoRepository implements TacoRepository {
 	public Taco save(Taco design) {
 		// Save design
 		design.setCreatedAt(new Date());
-		design.setId(keyGenerator.nextKey());
-		jdbc.update(INSERT_TACO_SQL, 
-				design.getId(),
-				design.getName(),
-				new Timestamp(design.getCreatedAt().getTime()));
+		PreparedStatementCreator psc = pscf.newPreparedStatementCreator(
+				Arrays.asList(
+				design.getName(), 
+				new Timestamp(design.getCreatedAt().getTime())));
+		KeyHolder keyHolder = new GeneratedKeyHolder();
+		jdbc.update(psc, keyHolder);
+		design.setId(keyHolder.getKey().longValue());
 
 		for (Ingredient ing: design.getIngredients()) {
-			jdbc.update("insert into Taco_Ingredients (taco, ingredient) values (?, ?)",
+			jdbc.update("insert into Ingredients_Tacos (taco, ingredient) values (?, ?)",
 					design.getId(), 
 					ing.getId());
 		}

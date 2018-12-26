@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS Ingredients_Tacos (
 	CONSTRAINT fk_ingredient FOREIGN KEY (ingredient) REFERENCES Ingredients(id)
 );
 
-CREATE TABLE Orders (
+CREATE TABLE IF NOT EXISTS Orders (
   id MEDIUMINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     deliveryName varchar(50) NOT NULL,
     deliveryStreet varchar(50) NOT NULL,

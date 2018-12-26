@@ -6,6 +6,5 @@ public interface IngredientRepository {
 
 	Ingredient findOne(String id);
 	Iterable<Ingredient> findAll();
-	void save(Ingredient ingredient);
 
 }

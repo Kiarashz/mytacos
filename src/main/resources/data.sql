@@ -1,26 +1,22 @@
-delete from Taco_Order_Tacos;
-delete from Taco_Ingredients;
-delete from Taco;
-delete from Taco_Order;
+DELETE FROM Ingredients;
 
-delete from Ingredient;
-insert into Ingredient (name, type)
+insert into Ingredients (name, itype)
                 values ('Flour Tortilla', 'WRAP');
-insert into Ingredient (name, type)
+insert into Ingredients (name, itype)
                 values ('Corn Tortilla', 'WRAP');
-insert into Ingredient (name, type)
+insert into Ingredients (name, itype)
                 values ('Ground Beef', 'PROTEIN');
-insert into Ingredient (name, type)
+insert into Ingredients (name, itype)
                 values ('Carnitas', 'PROTEIN');
-insert into Ingredient (name, type)
+insert into Ingredients (name, itype)
                 values ('Diced Tomatoes', 'VEGGIES');
-insert into Ingredient (name, type)
+insert into Ingredients (name, itype)
                 values ('Lettuce', 'VEGGIES');
-insert into Ingredient (name, type)
+insert into Ingredients (name, itype)
                 values ('Cheddar', 'CHEESE');
-insert into Ingredient (name, type)
+insert into Ingredients (name, itype)
                 values ('Monterrey Jack', 'CHEESE');
-insert into Ingredient (name, type)
+insert into Ingredients (name, itype)
                 values ('Salsa', 'SAUCE');
-insert into Ingredient (name, type)
+insert into Ingredients (name, itype)
                 values ('Sour Cream', 'SAUCE');

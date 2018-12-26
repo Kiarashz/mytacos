@@ -5,6 +5,7 @@ import java.sql.SQLException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
 import tacos.Ingredient;
@@ -22,30 +23,21 @@ public class JdbcIngredientRepository implements IngredientRepository {
 
 	@Override
 	public Ingredient findOne(String id) {
-		return jdbc.queryForObject("select id, name, type from Ingredient where id = ?", 
+		return jdbc.queryForObject("select id, name, itype from Ingredients where id = ?", 
 				this::mapToIngredient, id);
 	}
 
 	@Override
 	public Iterable<Ingredient> findAll() {
-		return jdbc.query("select id, name, type from Ingredient", 
+		return jdbc.query("select id, name, itype from Ingredients", 
 				this::mapToIngredient);
 	}
 
-	@Override
-	public void save(Ingredient ingredient) {
-		jdbc.update("Insert into Ingredient (id, name, type Values (?, ?, ?)",
-				ingredient.getId(),
-				ingredient.getName(),
-				ingredient.getType());
-
-	}
-	
 	private Ingredient mapToIngredient(ResultSet rs, int rowNumber) throws SQLException {
 		Ingredient ingredient = new Ingredient();
 		ingredient.setId(rs.getString("id"));
 		ingredient.setName(rs.getString("name"));
-		ingredient.setType(Type.valueOf(rs.getString("type")));
+		ingredient.setType(Type.valueOf(rs.getString("itype")));
 		return ingredient;					
 	}
 
