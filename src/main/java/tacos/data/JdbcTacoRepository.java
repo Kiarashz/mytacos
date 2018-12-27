@@ -46,7 +46,7 @@ public class JdbcTacoRepository implements TacoRepository {
 		design.setId(keyHolder.getKey().longValue());
 
 		for (Ingredient ing: design.getIngredients()) {
-			jdbc.update("insert into Ingredients_Tacos (taco, ingredient) values (?, ?)",
+			jdbc.update("insert into Ingredients_Tacos (tid, iid) values (?, ?)",
 					design.getId(), 
 					ing.getId());
 		}

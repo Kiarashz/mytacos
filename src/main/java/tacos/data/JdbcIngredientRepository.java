@@ -23,19 +23,19 @@ public class JdbcIngredientRepository implements IngredientRepository {
 
 	@Override
 	public Ingredient findOne(String id) {
-		return jdbc.queryForObject("select id, name, itype from Ingredients where id = ?", 
+		return jdbc.queryForObject("select iid, name, itype from Ingredients where iid = ?", 
 				this::mapToIngredient, id);
 	}
 
 	@Override
 	public Iterable<Ingredient> findAll() {
-		return jdbc.query("select id, name, itype from Ingredients", 
+		return jdbc.query("select iid, name, itype from Ingredients", 
 				this::mapToIngredient);
 	}
 
 	private Ingredient mapToIngredient(ResultSet rs, int rowNumber) throws SQLException {
 		Ingredient ingredient = new Ingredient();
-		ingredient.setId(rs.getString("id"));
+		ingredient.setId(rs.getString("iid"));
 		ingredient.setName(rs.getString("name"));
 		ingredient.setType(Type.valueOf(rs.getString("itype")));
 		return ingredient;					
