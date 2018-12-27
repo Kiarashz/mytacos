@@ -1,22 +1,20 @@
-DELETE FROM Ingredients;
-
-insert into Ingredients (name, itype)
-                values ('Flour Tortilla', 'WRAP');
-insert into Ingredients (name, itype)
-                values ('Corn Tortilla', 'WRAP');
-insert into Ingredients (name, itype)
-                values ('Ground Beef', 'PROTEIN');
-insert into Ingredients (name, itype)
-                values ('Carnitas', 'PROTEIN');
-insert into Ingredients (name, itype)
-                values ('Diced Tomatoes', 'VEGGIES');
-insert into Ingredients (name, itype)
-                values ('Lettuce', 'VEGGIES');
-insert into Ingredients (name, itype)
-                values ('Cheddar', 'CHEESE');
-insert into Ingredients (name, itype)
-                values ('Monterrey Jack', 'CHEESE');
-insert into Ingredients (name, itype)
-                values ('Salsa', 'SAUCE');
-insert into Ingredients (name, itype)
-                values ('Sour Cream', 'SAUCE');
+INSERT IGNORE INTO Ingredients 
+   SET id = 1, name = 'Flour Tortilla', itype = 'WRAP';
+INSERT IGNORE INTO Ingredients 
+   SET id = 2, name = 'Corn Tortilla', itype = 'WRAP';
+INSERT IGNORE INTO Ingredients 
+   SET id = 3, name = 'Ground Beef', itype = 'PROTEIN';
+INSERT IGNORE INTO Ingredients 
+   SET id = 4, name = 'Carnitas', itype = 'PROTEIN';
+INSERT IGNORE INTO Ingredients 
+   SET id = 5, name = 'Diced Tomatoes', itype = 'VEGGIES';
+INSERT IGNORE INTO Ingredients 
+   SET id = 6, name = 'Lettuce', itype = 'VEGGIES';
+INSERT IGNORE INTO Ingredients 
+   SET id = 7, name = 'Cheddar', itype = 'CHEESE';
+INSERT IGNORE INTO Ingredients 
+   SET id = 8, name = 'Monterrey Jack', itype = 'CHEESE';
+INSERT IGNORE INTO Ingredients 
+   SET id = 9, name = 'Salsa', itype = 'SAUCE';
+INSERT IGNORE INTO Ingredients 
+   SET id = 10, name = 'Sour Cream', itype = 'SAUCE';
