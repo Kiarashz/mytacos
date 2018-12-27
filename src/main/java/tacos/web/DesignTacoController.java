@@ -14,10 +14,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import lombok.extern.slf4j.Slf4j;
 import tacos.Ingredient;
 import tacos.Ingredient.Type;
+import tacos.Order;
 import tacos.Taco;
 import tacos.data.IngredientRepository;
 import tacos.data.TacoRepository;
@@ -25,6 +27,7 @@ import tacos.data.TacoRepository;
 @Slf4j
 @Controller
 @RequestMapping("/design")
+@SessionAttributes("order")
 public class DesignTacoController {
 
 	private final IngredientRepository ingredientRepository;
@@ -35,7 +38,12 @@ public class DesignTacoController {
 		this.ingredientRepository = ingredientRepository;
 		this.tacoRepository = tacoRepository;
 	}
-
+	
+	@ModelAttribute(name = "order")
+	public Order order() {
+		return new Order();
+	}
+	
 	@ModelAttribute(name = "taco")
 	public Taco taco() {
 		return new Taco();
@@ -44,11 +52,11 @@ public class DesignTacoController {
 	@GetMapping
 	public String design(Model model) {
 		log.info("Rendering Taco design form");
-		updateGetModel(model);
+		updateModel(model);
 		return "design";
 	}
 	
-	private void updateGetModel(Model model) {
+	private void updateModel(Model model) {
 		Iterable<Ingredient> iIngredients = ingredientRepository.findAll();
 		for (Type type : Ingredient.Type.values()) {
 			Stream<Ingredient> sIngredients = StreamSupport.stream(iIngredients.spliterator(), true);
@@ -58,14 +66,15 @@ public class DesignTacoController {
 	}
 
 	@PostMapping
-	public String processDesign(@Valid Taco taco, Errors errors, Model model) {
+	public String processDesign(@Valid Taco taco, Errors errors, Model model, @ModelAttribute Order order) {
 		log.info("Processing designed taco");
 	    if (errors.hasErrors()) {
-	    	updateGetModel(model);
+	    	updateModel(model);
 	    	// TODO: errors are not added to model
 	        return "design";
 	      }
 		tacoRepository.save(taco);
-		return "redirect:/orders";
+		order.getTacos().add(taco);
+		return "redirect:/orders/current";
 	}
 }
