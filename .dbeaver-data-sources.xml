@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data-sources>
+	<data-source id="mariaDB-167ef2255e3-2894b2b64d89ddc5" provider="mysql" driver="mariaDB" name="MariaDB - tacos" save-password="true" show-system-objects="true" show-util-objects="true" read-only="false">
+		<connection host="localhost" port="3306" server="" database="tacos" url="jdbc:mysql://localhost:3306/tacos" user="kiarash" password="EAwHLkZGSRNl8w==" home="/usr" type="dev"/>
+	</data-source>
+	<filters/>
+</data-sources>
