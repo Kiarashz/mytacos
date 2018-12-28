@@ -1,6 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<diagram version="1" name="tacos.erd" time="201812271346">
-	<entities/>
-	<relations/>
+<diagram version="1" name="tacos.erd" time="201812281122">
+	<entities>
+		<data-source id="mariaDB-167ef2255e3-2894b2b64d89ddc5">
+			<entity id="1" name="Ingredients" fq-name="tacos.Ingredients" order="0" x="140" y="40">
+				<path name="tacos"/>
+			</entity>
+			<entity id="2" name="Ingredients_Tacos" fq-name="tacos.Ingredients_Tacos" order="1" x="320" y="40">
+				<path name="tacos"/>
+			</entity>
+			<entity id="3" name="Orders" fq-name="tacos.Orders" order="2" x="240" y="180">
+				<path name="tacos"/>
+			</entity>
+			<entity id="4" name="Orders_Tacos" fq-name="tacos.Orders_Tacos" order="3" x="540" y="260">
+				<path name="tacos"/>
+			</entity>
+			<entity id="5" name="Tacos" fq-name="tacos.Tacos" order="4" x="560" y="40">
+				<path name="tacos"/>
+			</entity>
+		</data-source>
+	</entities>
+	<relations>
+		<relation name="fk_ingredient" fq-name="tacos.Ingredients_Tacos.fk_ingredient" type="fk" pk-ref="1" fk-ref="2"/>
+		<relation name="fk_order" fq-name="tacos.Orders_Tacos.fk_order" type="fk" pk-ref="3" fk-ref="4"/>
+		<relation name="fk_taco" fq-name="tacos.Ingredients_Tacos.fk_taco" type="fk" pk-ref="5" fk-ref="2"/>
+		<relation name="fk_taco2" fq-name="tacos.Orders_Tacos.fk_taco2" type="fk" pk-ref="5" fk-ref="4"/>
+	</relations>
 	<notes/>
 </diagram>
