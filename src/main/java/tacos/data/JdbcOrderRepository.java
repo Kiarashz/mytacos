@@ -30,7 +30,7 @@ public class JdbcOrderRepository implements OrderRepository {
 				.usingGeneratedKeyColumns("oid")
 				.withTableName("Orders");
 		orderTacoInsert = new SimpleJdbcInsert(jdbc)
-				.withTableName("Orders_Tac");
+				.withTableName("Orders_Tacos");
 		objectMapper = new ObjectMapper();
 	}
 
