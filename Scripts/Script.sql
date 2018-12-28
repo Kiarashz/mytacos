@@ -1,3 +1,5 @@
+DROP DATABASE tacos;
+CREATE DATABASE tacos character set UTF8mb4 collate utf8mb4_bin; 
 USE tacos;
 
 SELECT * FROM Ingredients;
