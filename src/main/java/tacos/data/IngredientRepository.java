@@ -1,10 +1,8 @@
 package tacos.data;
 
+import org.springframework.data.repository.CrudRepository;
+
 import tacos.Ingredient;
 
-public interface IngredientRepository {
-
-	Ingredient findOne(String id);
-	Iterable<Ingredient> findAll();
-
+public interface IngredientRepository extends CrudRepository<Ingredient, Long>{
 }

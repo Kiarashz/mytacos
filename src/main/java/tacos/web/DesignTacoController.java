@@ -61,7 +61,7 @@ public class DesignTacoController {
 		for (Type type : Ingredient.Type.values()) {
 			Stream<Ingredient> sIngredients = StreamSupport.stream(iIngredients.spliterator(), true);
 			model.addAttribute(type.name().toLowerCase(),
-					sIngredients.filter(ing -> ing.getType().equals(type)).collect(Collectors.toList()));
+					sIngredients.filter(ing -> ing.getItype().equals(type)).collect(Collectors.toList()));
 		}		
 	}
 

@@ -1,9 +1,18 @@
 package tacos;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.PrePersist;
+import javax.persistence.Table;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.CreditCardNumber;
@@ -13,9 +22,14 @@ import javax.validation.constraints.NotEmpty;
 import lombok.Data;
 
 @Data
-public class Order {
+@Entity
+@Table(name="orders")
+public class Order implements Serializable {
 
-	private long id;
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name="oid")
+	private Long id;
 	private Date placedAt;
 
 	@NotBlank(message = "Name is required")
@@ -43,6 +57,12 @@ public class Order {
 	private String ccCVV;
 
 	@NotEmpty(message = "You must have at least 1 taco in your order")
+	@ManyToMany(targetEntity=Taco.class)
 	private List<Taco> tacos = new ArrayList<Taco>();
+	
+	@PrePersist
+	void placedAt() {
+		this.placedAt = new Date();
+	}
 
 }
