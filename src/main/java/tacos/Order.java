@@ -1,13 +1,21 @@
 package tacos;
+import java.util.Date;
+import java.util.List;
+
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.CreditCardNumber;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+
 import lombok.Data;
 
 @Data
 public class Order {
 
+  @NotBlank
+  Long id;
+	
   @NotBlank(message="Name is required")
   private String name;
 
@@ -32,5 +40,10 @@ public class Order {
 
   @Digits(integer=3, fraction=0, message="Invalid CVV")
   private String ccCVV;
+  
+  @NotEmpty
+  private List<Taco> tacos;
 
+  @NotBlank
+  private Date placedAt;
 }
