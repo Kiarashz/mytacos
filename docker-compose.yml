@@ -23,8 +23,11 @@ services:
         - "-jar"
         - "/japp/tacos-0.0.1-SNAPSHOT.jar"
     volumes:
-      - ./build/lib/tacos-0.0.1-SNAPSHOT.jar:/japp/tacos-0.0.1-SNAPSHOT.jar
+      - ./build/libs/tacos-0.0.1-SNAPSHOT.jar:/japp/tacos-0.0.1-SNAPSHOT.jar
     ports:
       - 8080:8080
     networks:
       - jnet
+
+networks:
+    jnet:
