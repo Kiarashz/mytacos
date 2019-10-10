@@ -1,0 +1,30 @@
+
+
+version: "3.3"
+
+services:
+  mysql:
+    image: mysql:5.7
+    hostname: mysql
+    container_name: mysql
+    environment:
+        MYSQL_ROOT_PASSWORD: changeme
+    volumes:
+      - ./data:/var/lib/mysql
+    networks:
+      - jnet
+
+  japp:
+    image: openjdk:8u222-jre
+    hostname: japp
+    container_name: japp
+    command: 
+        - "java"
+        - "-jar"
+        - "/japp/tacos-0.0.1-SNAPSHOT.jar"
+    volumes:
+      - ./build/lib/tacos-0.0.1-SNAPSHOT.jar:/japp/tacos-0.0.1-SNAPSHOT.jar
+    ports:
+      - 8080:8080
+    networks:
+      - jnet
