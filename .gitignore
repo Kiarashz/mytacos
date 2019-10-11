@@ -28,4 +28,4 @@ gradle*
 /nbdist/
 /.nb-gradle/
 
-data
+.vscode/

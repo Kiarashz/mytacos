@@ -13,24 +13,9 @@ services:
         MYSQL_USERD: kiarash
         MYSQL_DATABASE: tacos
     volumes:
-      - ~/mysqldata:/var/lib/mysql
+      - mysqldata:/var/lib/mysql
     networks:
       - jnet
-
-  builder:
-    image: gradle:jdk12  # same version to be set in Dockerfile 
-    hostname: builder
-    container_name: builder
-    working_dir: /src
-    command: >
-        bash -c "gradle bootJar
-        && cp -r build/libs/* /app/"
-    volumes:
-        - .:/src
-        - /tmp/app:/app
-    networks:
-      - jnet
-
 
   japp:
     image: mytacos
@@ -50,5 +35,5 @@ services:
 networks:
     jnet:
 
-volumes:
-    builtApp:        
+volumes: 
+  mysqldata:
