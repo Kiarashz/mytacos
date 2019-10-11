@@ -4,9 +4,11 @@ buildscript {
 	}
 	repositories {
 		mavenCentral()
+        jcenter()
 	}
 	dependencies {
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath("com.bmuschko:gradle-docker-plugin:2.2")
 	}
 }
 
@@ -14,6 +16,7 @@ apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
+apply plugin: 'com.bmuschko.docker-remote-api'
 
 group = 'tutorials.spring5'
 version = '0.0.1-SNAPSHOT'
@@ -35,3 +38,14 @@ dependencies {
 	runtimeOnly('mysql:mysql-connector-java')
 	testImplementation('org.springframework.boot:spring-boot-starter-test')
 }
+
+task copyJar(type: Copy) {
+    dependsOn   'bootJar'
+    from        "build/libs/${bootJar.baseName}-${project.version}.jar"
+    into        'build/docker'
+    rename { String fileName ->
+        fileName.replace("-${project.version}", "")
+    }
+}
+
+build.dependsOn copyJar
